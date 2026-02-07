@@ -10,15 +10,15 @@ const Toolbar = () => {
     };
 
     return (
-        <div style={{ display: 'flex', justifyContent: 'space-between', padding: '1rem', borderBottom: '1px solid #ccc' }}>
-            <Link to="/" style={{ fontWeight: 'bold', fontSize: '1.2rem' }}>
+        <div className='d-flex justify-content-between align-items-center p-3 border-bottom mb-4'>
+            <Link to="/" className='fw-bold fs-4 text-decoration-none text-dark'>
                 MyBudget
             </Link>
             <div>
-                <Link to="/categories" style={{ marginRight: '1rem' }}>
+                <Link to="/categories" className='btn btn-outline-primary me-2'>
                     Categories
                 </Link>
-                <button onClick={addTransaction}>Add</button>
+                <button onClick={addTransaction} className='btn btn-primary'>Add</button>
             </div>
         </div>
     );
