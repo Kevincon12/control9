@@ -24,6 +24,16 @@ const Home = () => {
         dispatch(fetchCategories());
     }, [dispatch]);
 
+    const totalIncome = transactions
+        .filter(t => t.type === "income")
+        .reduce((sum, t) => sum + t.amount, 0);
+
+    const totalExpense = transactions
+        .filter(t => t.type === "expense")
+        .reduce((sum, t) => sum + t.amount, 0);
+
+    const total = totalIncome - totalExpense;
+
     const handleDelete = (id: string) => {
         dispatch(deleteTransactionFirebase(id));
     };
@@ -47,7 +57,13 @@ const Home = () => {
         e.preventDefault();
         if (!categoryId) return;
         if (editTransactionId) {
-            dispatch(updateTransactionFirebase({ id: editTransactionId, type, amount, categoryId, createdAt: transactions.find(t => t.id === editTransactionId)?.createdAt || new Date().toISOString() }));
+            dispatch(updateTransactionFirebase({
+                id: editTransactionId,
+                type,
+                amount,
+                categoryId,
+                createdAt: transactions.find(t => t.id === editTransactionId)?.createdAt || new Date().toISOString()
+            }));
         } else {
             dispatch(addTransactionFirebase({ type, amount, categoryId }));
         }
@@ -72,7 +88,13 @@ const Home = () => {
                 </div>
             )}
 
-            <div className="d-flex flex-wrap gap-3 p-2">
+            <div className="mt-3 p-3 border rounded text-center fw-bold" style={{ fontSize: '1.2rem' }}>
+                Total: <span style={{ color: total >= 0 ? 'green' : 'red' }}>
+                    {total >= 0 ? '+' : '-'}{Math.abs(total)}
+                </span>
+            </div>
+
+            <div className="d-flex flex-wrap gap-3 p-2 mt-2">
                 {transactions.map(t => {
                     const category = categories.find(c => c.id === t.categoryId);
                     const isIncome = t.type === "income";
