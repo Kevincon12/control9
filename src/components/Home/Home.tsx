@@ -2,8 +2,6 @@ import {useSelector} from "react-redux";
 import type {RootState} from "../../app/store.ts";
 
 const Home = () => {
-    const transactions = useSelector((state: RootState) => state.transactions.items)
-    const categories = useSelector((state: RootState) => state.categories.items)
     const loading = useSelector((state: RootState) => state.transactions.loading)
 
     return (
